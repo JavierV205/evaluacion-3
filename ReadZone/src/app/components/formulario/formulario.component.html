@@ -1,88 +1,144 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<div class="container mt-4">
 
-<div class="card shadow">
+    <div class="card shadow">
 
-<div class="card-body">
+        <div class="card-header bg-primary text-white">
 
-<h2>Solicitud de Libro</h2>
+            <h3>Solicitud de Libro</h3>
 
-<div class="mb-3">
+        </div>
 
-<label>Nombre</label>
+        <div class="card-body">
 
-<input
-class="form-control"
-[(ngModel)]="nombre">
+            <div class="mb-3">
 
-</div>
+                <label class="form-label">
+                    Nombre del lector
+                </label>
 
-<div class="mb-3">
+                <input type="text" class="form-control" [(ngModel)]="nombre" #txtNombre="ngModel" required
+                    minlength="10" maxlength="40">
+                <small class="text-danger" *ngIf="txtNombre.invalid && txtNombre.touched">
 
-<label>Libro</label>
+                    Debe ingresar un nombre de al menos 10 caracteres.
 
-<input
-class="form-control"
-[(ngModel)]="libro">
+                </small>
 
-</div>
+            </div>
 
-<div class="mb-3">
+            <div class="mb-3">
 
-<label>Fecha</label>
+                <label class="form-label">
 
-<input
-type="date"
-class="form-control"
-[(ngModel)]="fecha">
+                    Libro
 
-</div>
+                </label>
 
-<button
-class="btn btn-success"
-(click)="guardar()">
+                <input type="text" class="form-control" [(ngModel)]="libro" #txtLibro="ngModel" required minlength="10" maxlength="50">
 
-Guardar
+                <small class="text-danger" *ngIf="txtLibro.invalid && txtLibro.touched">
 
-</button>
+                    Debe ingresar un libro.
 
-</div>
+                </small>
 
-</div>
+            </div>
 
-<br>
+            <div class="mb-3">
 
-<table class="table table-striped">
+                <label class="form-label">
 
-<thead>
+                    Fecha
 
-<tr>
+                </label>
 
-<th>Nombre</th>
+                <input type="date" class="form-control" [(ngModel)]="fecha" #txtFecha="ngModel" required>
 
-<th>Libro</th>
+                <small class="text-danger" *ngIf="txtFecha.invalid && txtFecha.touched">
 
-<th>Fecha</th>
+                    Debe seleccionar una fecha.
 
-</tr>
+                </small>
 
-</thead>
+            </div>
 
-<tbody>
+            <button class="btn btn-success" (click)="guardar()">
 
-<tr *ngFor="let s of solicitudes">
+                Guardar Solicitud
 
-<td>{{s.nombre}}</td>
+            </button>
 
-<td>{{s.libro}}</td>
+        </div>
 
-<td>{{s.fecha}}</td>
+    </div>
 
-</tr>
+    <br>
 
-</tbody>
+    <div class="card shadow">
 
-</table>
+        <div class="card-header bg-dark text-white">
+
+            Solicitudes Registradas
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Nombre</th>
+                        <th>Libro</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let solicitud of solicitudes; let i = index">
+
+                        <td>{{ solicitud.nombre }}</td>
+
+                        <td>{{ solicitud.libro }}</td>
+
+                        <td>{{ solicitud.fecha }}</td>
+
+                        <td>
+
+                            <button class="btn btn-danger btn-sm" (click)="eliminar(i)">
+
+                                Eliminar
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="solicitudes.length === 0">
+
+                        <td colspan="4" class="text-center">
+
+                            No existen solicitudes registradas.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>

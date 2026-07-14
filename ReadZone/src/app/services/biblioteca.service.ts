@@ -5,35 +5,50 @@ import { Solicitud } from '../models/solicitud';
   providedIn: 'root'
 })
 export class BibliotecaService {
+  private clave = 'solicitudes';
 
   login(usuario: string, password: string): boolean {
 
-  if (usuario === 'javier' && password === '@lexSAnder_1234') {
+    if (usuario === 'javier' && password === '@lexSAnder_1234') {
 
-    localStorage.setItem('login', 'true');
+      localStorage.setItem('login', 'true');
 
-    return true;
+      return true;
+
+    }
+
+    return false;
+
+  }
+
+  logout(): void {
+
+    localStorage.removeItem('login');
 
   }
 
-  return false;
+  guardar(solicitud: Solicitud): void {
 
-}
+    const solicitudes = this.listar();
 
-logout() {
+    solicitudes.push(solicitud);
 
-  localStorage.removeItem('login');
-
-}
-
-  guardar(solicitudes: Solicitud){
-    const datos = this.listar();
-    datos.push(solicitudes)
-    localStorage.setItem('solicitud',JSON.stringify(datos))
+    localStorage.setItem(this.clave, JSON.stringify(solicitudes));
 
   }
+  isLogged(): boolean {
+    return localStorage.getItem('login') === 'true';
+  }
+
   listar(): Solicitud[]{
-    return JSON.parse(localStorage.getItem('Solicitud') || '[]');
+    const datos = localStorage.getItem(this.clave);
+    return datos ? JSON.parse(datos): [];
+  }
 
+  eliminar(indice: number): void {
+    const solicitud = this.listar();
+    solicitud.splice(indice, 1);
+    localStorage.setItem(this.clave, JSON.stringify(solicitud));
   }
 }
+
