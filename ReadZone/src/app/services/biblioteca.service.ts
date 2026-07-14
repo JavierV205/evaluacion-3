@@ -6,40 +6,23 @@ import { Solicitud } from '../models/solicitud';
 })
 export class BibliotecaService {
 
-  private clave = 'solicitudes';
+  login(usuario: string, password: string): boolean {
 
-  login(usuario: string, contraseña: string): boolean {
+  if (usuario === 'javier' && password === '@lexSAnder_1234') {
 
-    if (usuario === 'javier' && contraseña === '@lexSAnder_1234') {
-      localStorage.setItem('login', 'true');
-      return true;
-    }
+    localStorage.setItem('login', 'true');
 
-    return false;
-  }
-
-  logout() {
-    localStorage.removeItem('login');
-  }
-
-  isLogged() {
-    return localStorage.getItem('login') === 'true';
-  }
-
-  guardar(solicitud: Solicitud) {
-
-    const datos = this.listar();
-
-    datos.push(solicitud);
-
-    localStorage.setItem(this.clave, JSON.stringify(datos));
+    return true;
 
   }
 
-  listar(): Solicitud[] {
-
-    return JSON.parse(localStorage.getItem(this.clave) || '[]');
-
-  }
+  return false;
 
 }
+
+logout() {
+
+  localStorage.removeItem('login');
+
+}
+  }

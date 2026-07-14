@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BibliotecaService } from '../../services/biblioteca.service';
@@ -6,25 +7,33 @@ import { BibliotecaService } from '../../services/biblioteca.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  usurio = '';
-  contraseña = '';
+
+  usuario = '';
+  password = '';
   mensaje = '';
+
   constructor(
     private biblioteca: BibliotecaService,
     private router: Router
   ) { }
 
   ingresar() {
-    if (this.biblioteca.login(this.usurio, this.contraseña)) {
-      this.router.navigate(['/login']);
-
-    } else {
-      this.mensaje = "Usuario o contraseña incorrectas";
+    if (this.usuario.trim() === '' || this.password.trim() === '') {
+      this.mensaje = '!!!!Debes de ingresar todos los campos¡¡¡¡';
+      return;
     }
+    const acceso = this.biblioteca.login(this.usuario, this.password);
+
+    if (acceso) {
+      this.router.navigate(['/inicio'])
+    } else {
+      this.mensaje = 'Usuario o contraseña incorrectos.'
+    }
+    
   }
 }

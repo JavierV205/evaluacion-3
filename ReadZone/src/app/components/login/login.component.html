@@ -1,1 +1,45 @@
-<p>login works!</p>
+<div class="container">
+
+  <div class="login-card">
+
+    <h2>ReadZone</h2>
+
+    <p>Iniciar Sesión</p>
+
+    <div class="mb-3">
+      <label>Usuario</label>
+
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="usuario">
+    </div>
+
+    <div class="mb-3">
+      <label>Contraseña</label>
+
+      <input
+        type="password"
+        class="form-control"
+        [(ngModel)]="password">
+    </div>
+
+    <button
+      class="btn btn-primary w-100"
+      (click)="ingresar()">
+
+      Ingresar
+
+    </button>
+
+    <div
+      class="alert alert-danger mt-3"
+      *ngIf="mensaje">
+
+      {{ mensaje }}
+
+    </div>
+
+  </div>
+
+</div>
